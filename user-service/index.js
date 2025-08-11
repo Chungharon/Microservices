@@ -7,7 +7,12 @@ const port = 3001;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/users', {})
+// mongoose.connect('mongodb://localhost:27017/users', {})
+//     .then(() => console.log("Connected to MongoDB"))
+//     .catch(error => console.error("MongoDB connection error: ", error));
+
+
+mongoose.connect('mongodb://mongo:27017/users', {})
     .then(() => console.log("Connected to MongoDB"))
     .catch(error => console.error("MongoDB connection error: ", error));
 
