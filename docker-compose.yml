@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+  
+
+  task-service:
+    build:
+      context: .
+      dockerfile: task-service/Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
