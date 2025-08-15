@@ -12,6 +12,15 @@ services:
       timeout: 5s
       retries: 5
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_node
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+
   user-service:
     build:
       context: .
@@ -30,6 +39,7 @@ services:
       - "3002:3002"
     depends_on:
       - mongo
+      - rabbitmq 
 
 volumes:
   mongo_data:
